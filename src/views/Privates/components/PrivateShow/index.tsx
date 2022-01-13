@@ -1,6 +1,6 @@
 import { Box, Text, Center, Button } from "native-base";
 import { doc, deleteDoc, setDoc } from "firebase/firestore";
-import { db } from "../../../../firebase/firebase";
+import { auth, db } from "../../../../firebase/firebase";
 import { StatusBar } from "expo-status-bar";
 import { PrivateInterface } from "../../../../interfaces/PrivateInterface";
 
@@ -19,7 +19,7 @@ export const PrivateShow = ({ route, navigation }) => {
     const random = Math.floor(Math.random() * 1000000).toString();
 
     await setDoc(doc(db, "privates", random), {
-      from: "zQIWFPxcaCWHvLIT7OckgouB57W2",
+      from: auth.currentUser.uid,
       to: "TRiw2SaaaWear1oJmFyHPBHbLwE2",
       note_id: "605207",
       private_id: random,

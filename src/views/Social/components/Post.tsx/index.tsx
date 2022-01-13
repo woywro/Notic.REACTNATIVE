@@ -10,6 +10,8 @@ import { NoteItems } from "../../../../../App";
 import { newNote } from "../../../../utils/newNote";
 import { Divider } from "native-base";
 import { auth } from "../../../../firebase/firebase";
+import moment from "moment";
+import { FontAwesome } from "@expo/vector-icons";
 
 export const Post = ({ note, navigation }) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
@@ -46,22 +48,31 @@ export const Post = ({ note, navigation }) => {
   return (
     <Pressable onPress={() => setExpanded(!isExpanded)}>
       <Box borderRadius="10px" padding="10px" shadow={3} background="white">
-        <HStack>
-          <Text>{username}</Text>
-          <Text>{TimeConverter(note.modification_timestamp)}</Text>
+        <HStack width="100%" justifyContent="flex-end">
+          <Text fontSize="xs" marginRight="5px">
+            {username}
+          </Text>
+          <Text fontSize="xs">
+            {moment(
+              TimeConverter(note.modification_timestamp),
+              "DD/MM/YYYY hh:mm"
+            ).fromNow()}
+          </Text>
         </HStack>
-        <Text bold>{note.title}</Text>
+        <Text bold fontSize="xl">
+          {note.title}
+        </Text>
         <Divider my="2" bg={note.color} />
         {isExpanded == false ? (
           <Text>{generateIntroText(note.text)}</Text>
         ) : (
           <>
             <Text>{note.text}</Text>
-            <Divider my="2" bg={note.color} />
             <HStack
               width="100%"
               justifyContent="space-around"
               alignItems="center"
+              margin="10px"
             >
               {note.isEditable == true && (
                 <Button onPress={handleEditNote} colorScheme={note.color}>
@@ -72,6 +83,12 @@ export const Post = ({ note, navigation }) => {
                 Save to your notes
               </Button>
             </HStack>
+            {note.isEditable == false && (
+              <HStack width="100%" justifyContent="center">
+                <FontAwesome name="lock" size={15} color="black" />
+                <Text fontSize="xs">You can't modify this note</Text>
+              </HStack>
+            )}
           </>
         )}
         <Center marginTop="5px">
