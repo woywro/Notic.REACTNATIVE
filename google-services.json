@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1075113346070",
+    "project_id": "notic-ff4de",
+    "storage_bucket": "notic-ff4de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075113346070:android:c0c85efa02fed4162f6137",
+        "android_client_info": {
+          "package_name": "com.notic.noticapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075113346070-ru9c1s8bbg61pmt3egd901uqvoi064q9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3pC9Sw_Wm123Y60EieDRSSkk7pgObvrQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075113346070-ru9c1s8bbg61pmt3egd901uqvoi064q9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "./src/views/Home";
 import { CreateNote } from "./src/views/CreateNote";
 import { NativeBaseProvider, Box } from "native-base";
-import { createContext, useContext, useEffect } from "react";
 import { useState } from "react";
 import { ShareNote } from "./src/views/ShareNote";
 import { NoteDetails } from "./src/views/NoteDetails";
