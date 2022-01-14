@@ -55,7 +55,6 @@ export const NoteMenu = ({
   const { note } = route.params;
   const [show, setShow] = useState(false);
   const [isEditable, setEditable] = useState(note.isEditable);
-  // const [reminder, setReminder] = useState(note.reminder);
 
   const colors = [
     "rgb(10, 239, 255)",
@@ -66,7 +65,7 @@ export const NoteMenu = ({
   ];
 
   const handleDeleteReminder = () => {
-    setReminder("");
+    // setReminder("");
     const newArray = notes.filter((e) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -176,7 +175,7 @@ export const NoteMenu = ({
               Delete
             </Actionsheet.Item>
           )}
-          {reminder == "" ? (
+          {note.reminder == "" ? (
             <Actionsheet.Item onPress={() => setShow(!show)}>
               Reminder
             </Actionsheet.Item>

@@ -35,7 +35,6 @@ export const NoteDetails = ({ route, navigation }) => {
   const { note } = route.params;
   const [noteText, setNoteText] = useState(note.text);
   const [noteTitle, setNoteTitle] = useState(note.title);
-  const [reminder, setReminder] = useState(note.reminder);
   const [pinned, setPinned] = useState(note.isPinned);
   const [color, setColor] = useState(note.color);
   const { isOpen, onOpen, onClose } = useDisclose();
@@ -71,7 +70,7 @@ export const NoteDetails = ({ route, navigation }) => {
     });
   }, [noteText, noteTitle, color, pinned, color, note]);
 
-  const handleSaveNote = () => {
+  const handleSaveNote = (pinned) => {
     const newArray = notes.filter((e: NoteInterface) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -93,14 +92,13 @@ export const NoteDetails = ({ route, navigation }) => {
       isPinned: pinned,
       color: color,
       modification_timestamp: getTime(),
-      // reminder: reminderToSet
     });
     navigation.navigate("Notes");
   };
 
   const handlePinNote = useCallback(() => {
     setPinned(!pinned);
-    handleSaveNote();
+    handleSaveNote(!pinned);
   }, [pinned]);
 
   return (
@@ -151,8 +149,6 @@ export const NoteDetails = ({ route, navigation }) => {
         noteTitle={noteTitle}
         color={color}
         setColor={setColor}
-        reminder={reminder}
-        setReminder={setReminder}
       />
       {note.owner == auth.currentUser.uid && (
         <Box

@@ -45,7 +45,6 @@ export const Reminder = ({ route, show, setShow }) => {
     const timestamp = moment(formatDate(date, time), "DD/MM/YYYY hh:mm")
       .valueOf()
       .toString();
-    // setReminder(timestamp);
     const newArray = notes.filter((e: NoteInterface) => e.id !== note.id);
     newArray.push(
       updateNote(
