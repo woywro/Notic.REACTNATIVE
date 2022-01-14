@@ -1,15 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
-import { Button } from "native-base";
-import {
-  Radio,
-  Select,
-  Box,
-  TextArea,
-  Input,
-  Divider,
-  Text,
-} from "native-base";
+import { Box, TextArea, Input, Divider, Text } from "native-base";
 import { updateNote } from "../../utils/updateNote";
 import { useRecoilState } from "recoil";
 import { NoteItems } from "../../../App";
@@ -17,10 +7,7 @@ import { updateDoc } from "firebase/firestore";
 import { TimeConverter } from "../../utils/TimeConverter";
 import { Actionsheet, useDisclose } from "native-base";
 import { NoteMenu } from "./components/NoteMenu/";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Platform } from "react-native";
 import { auth } from "../../firebase/firebase";
-import { newNote } from "../../utils/newNote";
 import { setDoc, collection, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { getTime } from "../../utils/getTime";
@@ -43,7 +30,6 @@ export const NoteDetails = ({ route, navigation }) => {
     navigation.setParams({
       note: notes.filter((e) => e.id == note.id)[0],
     });
-    console.log(note);
   }, [notes]);
 
   useEffect(() => {

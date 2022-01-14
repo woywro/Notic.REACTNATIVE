@@ -1,8 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { Box, Text, VStack, Center } from "native-base";
-import { useRecoilState } from "recoil";
-import { NoteItems } from "../../../App";
+import { Box, Text, VStack, Center, Spinner } from "native-base";
+import React from "react";
 import {
   collection,
   where,
@@ -16,6 +15,7 @@ import { db } from "../../firebase/firebase";
 import { useEffect, useState } from "react";
 import { Post } from "./components/Post.tsx";
 export const Social = ({ navigation }) => {
+  const [loading, setLoading] = useState(true);
   const [sharedWithUser, setSharedWithUser] = useState([]);
   const getSharedItems = async () => {
     const newArray = [];
@@ -31,10 +31,16 @@ export const Social = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getSharedItems();
+    getSharedItems().then(() => {
+      setLoading(false);
+    });
   }, []);
 
-  return (
+  return loading ? (
+    <Center width="100%" height="100%">
+      <Spinner color="indigo.500" size="lg" />
+    </Center>
+  ) : (
     <VStack space={2.5} px="3" height="100%" width="100%" padding="10px">
       {sharedWithUser.length !== 0 ? (
         sharedWithUser.map((e) => {
@@ -49,12 +55,3 @@ export const Social = ({ navigation }) => {
     </VStack>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

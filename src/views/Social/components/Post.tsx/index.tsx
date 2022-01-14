@@ -12,11 +12,13 @@ import { Divider } from "native-base";
 import { auth } from "../../../../firebase/firebase";
 import moment from "moment";
 import { FontAwesome } from "@expo/vector-icons";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 export const Post = ({ note, navigation }) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
   const [username, setUsername] = useState("");
   const [isExpanded, setExpanded] = useState(false);
+  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     getPostOwner(note.owner);
@@ -43,6 +45,7 @@ export const Post = ({ note, navigation }) => {
     );
     setNotes([...notes, noteCopy]);
     setDoc(doc(db, "notes", noteCopy.id), noteCopy);
+    setSaved(true);
   };
 
   return (
@@ -79,8 +82,12 @@ export const Post = ({ note, navigation }) => {
                   Edit Online
                 </Button>
               )}
-              <Button onPress={handleDuplicateNote} colorScheme={note.color}>
-                Save to your notes
+              <Button
+                onPress={handleDuplicateNote}
+                colorScheme={note.color}
+                disabled={saved}
+              >
+                {saved ? "Saved" : "Save to your notes"}
               </Button>
             </HStack>
             {note.isEditable == false && (

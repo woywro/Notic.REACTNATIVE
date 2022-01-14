@@ -57,11 +57,11 @@ export const NoteMenu = ({
   const [isEditable, setEditable] = useState(note.isEditable);
 
   const colors = [
-    "rgb(10, 239, 255)",
-    "rgb(190, 10, 255)",
-    "rgb(20, 125, 245)",
-    "rgb(242, 158, 76)",
-    "rgb(88, 10, 255)",
+    "rgb(239, 71, 111)",
+    "rgb(255, 209, 102)",
+    "rgb(6, 214, 160)",
+    "rgb(159, 255, 203)",
+    "rgb(17, 138, 178)",
   ];
 
   const handleDeleteReminder = () => {

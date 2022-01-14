@@ -84,7 +84,7 @@ export const Login = ({ navigation }) => {
           <Button
             mt="2"
             colorScheme="indigo"
-            onPress={() => signIn("woywro@gmail.com", "rrreee")}
+            onPress={() => signIn("test@test.pl", "rrreee")}
           >
             Sign in
           </Button>

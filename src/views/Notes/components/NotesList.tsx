@@ -16,12 +16,12 @@ import { ScrollView } from "native-base";
 
 export const NotesList = ({ navigation }) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
+  const [sortedNotes, setSortedNotes] = useState(notes);
   const [listEditMode, setListEditMode] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
   const notesFetched = useRecoilValue(NoteItemsQuery);
 
   useEffect(() => {
-    console.log("dupa");
     if (notes.length == 0) {
       const sorted = JSON.parse(JSON.stringify(notesFetched)).sort((a, b) => {
         return b.created_timestamp - a.created_timestamp;
@@ -29,6 +29,13 @@ export const NotesList = ({ navigation }) => {
       setNotes(sorted);
     }
   }, []);
+
+  useEffect(() => {
+    const sorted = JSON.parse(JSON.stringify(notes)).sort((a, b) => {
+      return b.created_timestamp - a.created_timestamp;
+    });
+    setSortedNotes(sorted);
+  }, [notes]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -60,7 +67,7 @@ export const NotesList = ({ navigation }) => {
     <VStack space={2.5} px="3" height="100%" width="100%">
       {notes.length !== 0 ? (
         <ScrollView>
-          {notes.map((e) => {
+          {sortedNotes.map((e) => {
             return (
               e.isPinned == true && (
                 <Note
@@ -75,7 +82,7 @@ export const NotesList = ({ navigation }) => {
             );
           })}
           <Divider my={2} />
-          {notes.map((e) => {
+          {sortedNotes.map((e) => {
             return (
               e.isPinned == false && (
                 <Note

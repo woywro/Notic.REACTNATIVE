@@ -13,6 +13,8 @@ import { auth } from "./src/firebase/firebase";
 import { Notes } from "./src/views/Notes";
 import { Privates } from "./src/views/Privates";
 import { PrivateShow } from "./src/views/Privates/components/PrivateShow";
+import { Spinner } from "native-base";
+import { Center } from "native-base";
 import {
   setDoc,
   doc,
@@ -62,7 +64,13 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <RecoilRoot>
-        <React.Suspense fallback={<Text>Loading...</Text>}>
+        <React.Suspense
+          fallback={
+            <Center width="100%" height="100%">
+              <Spinner color="indigo.500" size="lg" />
+            </Center>
+          }
+        >
           <NavigationContainer>
             <Stack.Navigator>
               <Stack.Screen name="Login" component={Login} />
