@@ -35,9 +35,17 @@ export const NoteDetails = ({ route, navigation }) => {
   const { note } = route.params;
   const [noteText, setNoteText] = useState(note.text);
   const [noteTitle, setNoteTitle] = useState(note.title);
+  const [reminder, setReminder] = useState(note.reminder);
   const [pinned, setPinned] = useState(note.isPinned);
   const [color, setColor] = useState(note.color);
   const { isOpen, onOpen, onClose } = useDisclose();
+
+  useEffect(() => {
+    navigation.setParams({
+      note: notes.filter((e) => e.id == note.id)[0],
+    });
+    console.log(note);
+  }, [notes]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -85,20 +93,9 @@ export const NoteDetails = ({ route, navigation }) => {
       isPinned: pinned,
       color: color,
       modification_timestamp: getTime(),
+      // reminder: reminderToSet
     });
     navigation.navigate("Notes");
-  };
-
-  const handleDuplicateNote = () => {
-    const noteCopy = newNote(
-      note.title,
-      note.text,
-      auth.currentUser.uid.toString(),
-      "",
-      note.color
-    );
-    setNotes([...notes, noteCopy]);
-    setDoc(doc(db, "notes", noteCopy.id), noteCopy);
   };
 
   const handlePinNote = useCallback(() => {
@@ -154,6 +151,8 @@ export const NoteDetails = ({ route, navigation }) => {
         noteTitle={noteTitle}
         color={color}
         setColor={setColor}
+        reminder={reminder}
+        setReminder={setReminder}
       />
       {note.owner == auth.currentUser.uid && (
         <Box

@@ -33,6 +33,8 @@ interface Props {
   noteTitle: string;
   color: string;
   setColor: any;
+  reminder: string;
+  setReminder: any;
 }
 
 export const NoteMenu = ({
@@ -46,11 +48,14 @@ export const NoteMenu = ({
   noteTitle,
   color,
   setColor,
+  setReminder,
+  reminder,
 }: Props) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
   const { note } = route.params;
   const [show, setShow] = useState(false);
   const [isEditable, setEditable] = useState(note.isEditable);
+  // const [reminder, setReminder] = useState(note.reminder);
 
   const colors = [
     "rgb(10, 239, 255)",
@@ -60,7 +65,8 @@ export const NoteMenu = ({
     "rgb(88, 10, 255)",
   ];
 
-  const handleDeleteReminder = useCallback(() => {
+  const handleDeleteReminder = () => {
+    setReminder("");
     const newArray = notes.filter((e) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -79,7 +85,7 @@ export const NoteMenu = ({
     updateDoc(noteRef, {
       reminder: "",
     });
-  }, []);
+  };
 
   const handleSaveNote = () => {
     const newArray = notes.filter((e) => e.id !== note.id);
@@ -166,26 +172,11 @@ export const NoteMenu = ({
             Send Private
           </Actionsheet.Item>
           {note.owner == auth.currentUser.uid && (
-            <>
-              <Actionsheet.Item onPress={handleDeleteNote}>
-                Delete
-              </Actionsheet.Item>
-              {/* {isEditable == false ? (
-                <Actionsheet.Item
-                  onPress={() => {
-                    setEditable(true);
-                  }}
-                >
-                  set Editable
-                </Actionsheet.Item>
-              ) : (
-                <Actionsheet.Item onPress={() => setEditable(false)}>
-                  not editable
-                </Actionsheet.Item>
-              )} */}
-            </>
+            <Actionsheet.Item onPress={handleDeleteNote}>
+              Delete
+            </Actionsheet.Item>
           )}
-          {note.reminder == "" ? (
+          {reminder == "" ? (
             <Actionsheet.Item onPress={() => setShow(!show)}>
               Reminder
             </Actionsheet.Item>
@@ -198,7 +189,12 @@ export const NoteMenu = ({
           <Actionsheet.Item onPress={handleSaveNote}>Save</Actionsheet.Item>
         </Actionsheet.Content>
       </Actionsheet>
-      <Reminder route={route} show={show} setShow={setShow} />
+      <Reminder
+        route={route}
+        show={show}
+        setShow={setShow}
+        // setReminder={setReminder}
+      />
     </>
   );
 };

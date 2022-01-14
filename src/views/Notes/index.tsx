@@ -11,15 +11,15 @@ import { UserData } from "../../../App";
 import { NoteItems } from "../../../App";
 
 export const Notes = ({ navigation }) => {
-  const [notes, setNotes] = useRecoilState(NoteItems);
+  // const [notes, setNotes] = useRecoilState(NoteItems);
   const handleAdd = useCallback(() => {
     navigation.navigate("createNote");
   }, []);
-  const logout = () => {
-    auth.signOut();
-    setNotes([]);
-    navigation.navigate("Login");
-  };
+  // const logout = () => {
+  //   auth.signOut();
+  //   setNotes([]);
+  //   navigation.navigate("Login");
+  // };
   return (
     <Box w="100%" background="#E5E5E5" alignItems={"center"}>
       {/* <Button onPress={logout}>logout</Button> */}

@@ -4,9 +4,8 @@ import { TimeConverter } from "../../../utils/TimeConverter";
 import { doc, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 import { FontAwesome } from "@expo/vector-icons";
-import { AlertDialog } from "native-base";
 import moment from "moment";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 export const Note = ({
   note,
   navigation,
@@ -23,7 +22,6 @@ export const Note = ({
       snapshot.forEach((doc) => {
         newArray.push(doc.data());
       });
-      console.log(newArray[0].username);
     }
   };
   getOwnerData();
@@ -32,28 +30,12 @@ export const Note = ({
     return `${text.split(" ").splice(0, 15).join(" ")}...`;
   }, []);
 
-  // const handleShowNoteDetails = () => {
-  //   if (note.owner == auth.currentUser.uid) {
-  //     navigation.navigate("NoteDetails", { note: note });
-  //   } else if (
-  //     note.owner !== auth.currentUser.uid &&
-  //     note.isEditable == false
-  //   ) {
-  //     // handleDuplicateNote();
-  //   }
-  // };
-
-  const handleDuplicateNote = () => {
-    const noteCopy = newNote(
-      note.title,
-      note.text,
-      auth.currentUser.uid.toString(),
-      "",
-      note.color
-    );
-    setNotes([...notes, noteCopy]);
-    setDoc(doc(db, "notes", noteCopy.id), noteCopy);
-  };
+  useEffect(() => {
+    // navigation.setParams({
+    //   note: note,
+    // });
+    console.log(note);
+  }, [note]);
 
   return (
     <Pressable

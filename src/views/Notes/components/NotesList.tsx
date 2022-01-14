@@ -4,7 +4,6 @@ import { Button } from "native-base";
 import { Container, VStack, Flex, Center, Box } from "native-base";
 import { Fab } from "native-base";
 import { Icon, HStack } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
 import { Note } from "./Note";
 import { useRecoilState } from "recoil";
 import { NoteItems } from "../../../../App";
@@ -14,20 +13,21 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { Divider, Text } from "native-base";
 import { db } from "../../../firebase/firebase";
 import { ScrollView } from "native-base";
-import { SimpleGrid } from "native-base";
 
 export const NotesList = ({ navigation }) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
-  // const [notesSorted, setNotesSorted] = useState([]);
   const [listEditMode, setListEditMode] = useState(false);
   const [groupValues, setGroupValues] = useState([]);
   const notesFetched = useRecoilValue(NoteItemsQuery);
 
   useEffect(() => {
-    const sorted = JSON.parse(JSON.stringify(notesFetched)).sort((a, b) => {
-      return b.created_timestamp - a.created_timestamp;
-    });
-    setNotes(sorted);
+    console.log("dupa");
+    if (notes.length == 0) {
+      const sorted = JSON.parse(JSON.stringify(notesFetched)).sort((a, b) => {
+        return b.created_timestamp - a.created_timestamp;
+      });
+      setNotes(sorted);
+    }
   }, []);
 
   useEffect(() => {
@@ -45,13 +45,6 @@ export const NotesList = ({ navigation }) => {
         ),
     });
   }, [listEditMode, groupValues]);
-
-  // useEffect(() => {
-  //   const sorted = JSON.parse(JSON.stringify(notes)).sort((a, b) => {
-  //     return a.created_timestamp - b.created_timestamp;
-  //   });
-  //   setNotes(sorted);
-  // }, [notes]);
 
   const handleDeleteEditMode = useCallback(() => {
     const afterDelete = notes.filter((e) => !groupValues.includes(e.id));

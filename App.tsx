@@ -53,17 +53,6 @@ export const NoteItemsQuery = selector({
     snapshot.forEach((doc) => {
       newArray.push(doc.data());
     });
-    //second query
-    // const newArray1 = [];
-    // const q1 = query(
-    //   collection(db, "notes"),
-    //   where("sharedWith", "array-contains", auth.currentUser.uid)
-    // );
-    // const snapshot1 = await getDocs(q1);
-    // snapshot1.forEach((doc) => {
-    //   newArray1.push(doc.data());
-    // });
-    // return newArray.concat(newArray1);
     return newArray;
   },
 });

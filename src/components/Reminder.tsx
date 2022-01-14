@@ -45,6 +45,7 @@ export const Reminder = ({ route, show, setShow }) => {
     const timestamp = moment(formatDate(date, time), "DD/MM/YYYY hh:mm")
       .valueOf()
       .toString();
+    // setReminder(timestamp);
     const newArray = notes.filter((e: NoteInterface) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -54,16 +55,13 @@ export const Reminder = ({ route, show, setShow }) => {
         note.sharedWith,
         note.isPinned,
         note.color,
-        timestamp
+        timestamp,
+        note.isEditable
       )
     );
     setNotes(newArray);
     const noteRef = doc(db, "notes", note.id);
     updateDoc(noteRef, {
-      text: note.text,
-      title: note.title,
-      isPinned: note.isPinned,
-      color: note.color,
       reminder: timestamp,
     });
   };
