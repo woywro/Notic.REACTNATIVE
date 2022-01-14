@@ -19,15 +19,15 @@ export const Reminder = ({ route, show, setShow }) => {
   const [time, setTime] = useState<Date>(new Date());
   const [mode, setMode] = useState<mode>("date");
 
-  const onChange = () => {
+  const onChange = (event, selectedValue) => {
     setShow(Platform.OS === "ios");
     if (mode == "date") {
-      const currentDate = new Date();
+      const currentDate = selectedValue || new Date();
       setDate(currentDate);
       setMode("time");
       setShow(Platform.OS !== "ios");
     } else {
-      const selectedTime = new Date();
+      const selectedTime = selectedValue || new Date();
       setTime(selectedTime);
       setShow(Platform.OS === "ios");
       setMode("date");

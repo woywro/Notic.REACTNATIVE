@@ -70,7 +70,7 @@ export const NoteDetails = ({ route, navigation }) => {
     });
   }, [noteText, noteTitle, color, pinned, color, note]);
 
-  const handleSaveNote = (pinned) => {
+  const handleSaveNote = useCallback(() => {
     const newArray = notes.filter((e: NoteInterface) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -94,12 +94,12 @@ export const NoteDetails = ({ route, navigation }) => {
       modification_timestamp: getTime(),
     });
     navigation.navigate("Notes");
-  };
+  }, [pinned, color, noteTitle, noteText, note]);
 
   const handlePinNote = useCallback(() => {
     setPinned(!pinned);
-    handleSaveNote(!pinned);
-  }, [pinned]);
+    handleSaveNote();
+  }, [pinned, note.isPinned]);
 
   return (
     <Box
