@@ -18,7 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { NoteInterface } from "../../interfaces/NoteInterface";
 
 export const NoteDetails = ({ route, navigation }) => {
-  const [notes, setNotes] = useRecoilState(NoteItems);
+  const [notes, setNotes] = useRecoilState<NoteInterface[]>(NoteItems);
   const { note } = route.params;
   const [noteText, setNoteText] = useState(note.text);
   const [noteTitle, setNoteTitle] = useState(note.title);

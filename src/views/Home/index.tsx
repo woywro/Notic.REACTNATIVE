@@ -4,7 +4,7 @@ import { Social } from "../Social";
 import { Reminders } from "../Reminders";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
-import { Privates } from "../Privates";
+import { Account } from "../Account";
 
 const Tab = createBottomTabNavigator();
 
@@ -51,8 +51,8 @@ export const Home = () => {
         }}
       />
       <Tab.Screen
-        name="Privates"
-        component={Privates}
+        name="Account"
+        component={Account}
         options={{
           tabBarIcon: ({ focused }) => (
             <Ionicons

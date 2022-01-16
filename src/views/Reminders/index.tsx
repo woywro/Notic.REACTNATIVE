@@ -2,14 +2,16 @@ import { useRecoilState } from "recoil";
 import { NoteItems } from "../../../App";
 import { VStack } from "native-base";
 import { ReminderElement } from "./components/ReminderElement";
-import { NoteInterface } from "../../interfaces/NoteInterface";
 import { useEffect, useState } from "react";
+import { NoteInterface } from "../../interfaces/NoteInterface";
 
 export const Reminders = ({ navigation }) => {
   const [notes, setNotes] = useRecoilState(NoteItems);
-  const [notesWithReminder, setNotesWithReminder] = useState([]);
+  const [notesWithReminder, setNotesWithReminder] = useState<NoteInterface[]>(
+    []
+  );
   useEffect(() => {
-    const notesWithReminder = notes
+    const notesWithReminder: NoteInterface[] = notes
       .filter((e: NoteInterface) => e.reminder !== "")
       .sort((a: any, b: any) => a.reminder - b.reminder);
     setNotesWithReminder(notesWithReminder);

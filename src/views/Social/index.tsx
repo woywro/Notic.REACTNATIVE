@@ -14,11 +14,12 @@ import { auth } from "../../firebase/firebase";
 import { db } from "../../firebase/firebase";
 import { useEffect, useState } from "react";
 import { Post } from "./components/Post.tsx";
+import { NoteInterface } from "../../interfaces/NoteInterface";
 export const Social = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
-  const [sharedWithUser, setSharedWithUser] = useState([]);
+  const [sharedWithUser, setSharedWithUser] = useState<NoteInterface[]>([]);
   const getSharedItems = async () => {
-    const newArray = [];
+    const newArray: NoteInterface[] = [];
     const q = query(
       collection(db, "notes"),
       where("sharedWith", "array-contains", auth.currentUser.uid)

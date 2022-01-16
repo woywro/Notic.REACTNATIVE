@@ -19,6 +19,7 @@ import {
   setDoc,
   doc,
   getDocs,
+  getDoc,
   collection,
   where,
   query,
@@ -32,15 +33,17 @@ import {
   selector,
   useRecoilState,
   useRecoilValue,
+  selectorFamily,
 } from "recoil";
+import { NoteInterface } from "./src/interfaces/NoteInterface";
 
-export const NoteItems = atom({
+export const NoteItems = atom<NoteInterface[]>({
   key: "NoteItems",
   default: [],
 });
-export const UserData = atom({
-  key: "UserData",
-  default: { uid: "" },
+export const user = atom({
+  key: "user",
+  default: {},
 });
 
 export const NoteItemsQuery = selector({

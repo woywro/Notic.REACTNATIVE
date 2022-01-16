@@ -10,31 +10,52 @@ import {
   Button,
   HStack,
   Center,
-  NativeBaseProvider,
 } from "native-base";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { UserData } from "../../../App";
+import { useRecoilValue } from "recoil";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { user, userDataQuery } from "../../../App";
 import { useRecoilState } from "recoil";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export const Login = ({ navigation }) => {
-  const [userData, setUserData] = useRecoilState(UserData);
-
+  const [userData, setUserData] = useRecoilState(user);
   const auth = getAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const signIn = (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setUserData(JSON.parse(JSON.stringify(auth.currentUser)));
-        navigation.navigate("Home");
-      })
+      .then((userCredential) => {})
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // setError(errorMessage);
       });
   };
+
+  const getUserData = async () => {
+    const docRef = doc(db, "users", auth.currentUser.uid);
+    const snapshot = await getDoc(docRef);
+    const res = snapshot.data();
+    return res;
+  };
+
+  React.useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const res = await getUserData();
+        setUserData(res);
+        navigation.navigate("Home");
+      } else {
+        setUserData({});
+        navigation.navigate("Login");
+      }
+    });
+  }, [auth]);
 
   return (
     <Center flex={1} px="3">

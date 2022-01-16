@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { collection, getDocs, doc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
 import { updateNote } from "../../utils/updateNote";
+import { NoteInterface } from "../../interfaces/NoteInterface";
 export const ShareNote = ({ navigation, route }) => {
   const { note } = route.params;
   const [groupValues, setGroupValues] = useState([]);

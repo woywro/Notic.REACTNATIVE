@@ -13,9 +13,10 @@ import { auth } from "../../../../firebase/firebase";
 import moment from "moment";
 import { FontAwesome } from "@expo/vector-icons";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
+import { NoteInterface } from "../../../../interfaces/NoteInterface";
 
 export const Post = ({ note, navigation }) => {
-  const [notes, setNotes] = useRecoilState(NoteItems);
+  const [notes, setNotes] = useRecoilState<NoteInterface[]>(NoteItems);
   const [username, setUsername] = useState("");
   const [isExpanded, setExpanded] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -36,14 +37,15 @@ export const Post = ({ note, navigation }) => {
   };
 
   const handleDuplicateNote = () => {
-    const noteCopy = newNote(
+    const noteCopy: NoteInterface = newNote(
       note.title,
       note.text,
       auth.currentUser.uid.toString(),
       note.reminder,
       note.color
     );
-    setNotes([...notes, noteCopy]);
+    const withDuplicated: NoteInterface[] = [...notes, noteCopy];
+    setNotes(withDuplicated);
     setDoc(doc(db, "notes", noteCopy.id), noteCopy);
     setSaved(true);
   };
