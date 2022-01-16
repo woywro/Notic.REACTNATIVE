@@ -42,7 +42,14 @@ export const Social = ({ navigation }) => {
       <Spinner color="indigo.500" size="lg" />
     </Center>
   ) : (
-    <VStack space={2.5} px="3" height="100%" width="100%" padding="10px">
+    <VStack
+      space={2.5}
+      px="3"
+      height="100%"
+      width="100%"
+      padding="10px"
+      background="white"
+    >
       {sharedWithUser.length !== 0 ? (
         sharedWithUser.map((e) => {
           return <Post note={e} navigation={navigation} />;

@@ -9,7 +9,7 @@ import {
 } from "native-base";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { user } from "../../../App";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { ErrorPopup } from "../../components/ErrorPopup";
@@ -48,7 +48,6 @@ export const Login = ({ navigation }) => {
         setUserData(result);
         navigation.navigate("Home");
       } else {
-        setUserData({});
         navigation.navigate("Login");
       }
     });
@@ -101,9 +100,23 @@ export const Login = ({ navigation }) => {
             <Button
               mt="2"
               backgroundColor="yellow.500"
-              onPress={() => signIn("test@test.pl", "rrreee")}
+              onPress={() => signIn(email, password)}
             >
               Sign in
+            </Button>
+            <Button
+              mt="2"
+              backgroundColor="yellow.500"
+              onPress={() => signIn("test@test.pl", "rrreee")}
+            >
+              test
+            </Button>
+            <Button
+              mt="2"
+              backgroundColor="yellow.500"
+              onPress={() => signIn("woywro@gmail.com", "rrreee")}
+            >
+              woywro
             </Button>
           </VStack>
         </Box>

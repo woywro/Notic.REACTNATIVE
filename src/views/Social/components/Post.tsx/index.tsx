@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../../firebase/firebase";
-import { Box, HStack, Text, Button, Center } from "native-base";
+import { Box, HStack, Text, Button, Center, VStack } from "native-base";
 import { generateIntroText } from "../../../../utils/generateIntroText";
 import { TimeConverter } from "../../../../utils/TimeConverter";
 import { Pressable } from "react-native";
@@ -14,6 +14,9 @@ import moment from "moment";
 import { FontAwesome } from "@expo/vector-icons";
 import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 import { NoteInterface } from "../../../../interfaces/NoteInterface";
+import { AntDesign } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 export const Post = ({ note, navigation }) => {
   const [notes, setNotes] = useRecoilState<NoteInterface[]>(NoteItems);
@@ -52,60 +55,77 @@ export const Post = ({ note, navigation }) => {
 
   return (
     <Pressable onPress={() => setExpanded(!isExpanded)}>
-      <Box borderRadius="10px" padding="10px" shadow={3} background="white">
-        <HStack width="100%" justifyContent="flex-end">
-          <Text fontSize="xs" marginRight="5px">
-            {username}
-          </Text>
-          <Text fontSize="xs">
-            {moment(
-              TimeConverter(note.modification_timestamp),
-              "DD/MM/YYYY hh:mm"
-            ).fromNow()}
-          </Text>
-        </HStack>
-        <Text bold fontSize="xl">
-          {note.title}
-        </Text>
-        <Divider my="2" bg={note.color} />
-        {isExpanded == false ? (
-          <Text>{generateIntroText(note.text)}</Text>
-        ) : (
-          <>
-            <Text>{note.text}</Text>
-            <HStack
-              width="100%"
-              justifyContent="space-around"
-              alignItems="center"
-              margin="10px"
-            >
-              {note.isEditable == true && (
-                <Button onPress={handleEditNote} colorScheme={note.color}>
-                  Edit Online
-                </Button>
-              )}
-              <Button
-                onPress={handleDuplicateNote}
-                colorScheme={note.color}
-                disabled={saved}
-              >
-                {saved ? "Saved" : "Save to your notes"}
-              </Button>
-            </HStack>
-            {note.isEditable == false && (
-              <HStack width="100%" justifyContent="center">
-                <FontAwesome name="lock" size={15} color="black" />
-                <Text fontSize="xs">You can't modify this note</Text>
-              </HStack>
-            )}
-          </>
-        )}
-        <Center marginTop="5px">
+      <Box padding="10px" background="white">
+        <HStack
+          width="100%"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <VStack justifyContent="flex-end">
+            <Text fontSize="md" fontWeight="bold" marginRight="5px">
+              {username}
+            </Text>
+            <Text fontSize="xs">
+              {moment(
+                TimeConverter(note.modification_timestamp),
+                "DD/MM/YYYY hh:mm"
+              ).fromNow()}
+            </Text>
+          </VStack>
           <Text fontSize="xs">{`you and ${
             note.sharedWith.length - 1
           } more...`}</Text>
-        </Center>
+        </HStack>
+        <Box
+          borderRadius="10px"
+          padding="10px"
+          margin="5px"
+          background="white"
+          shadow={1}
+          minHeight="150px"
+        >
+          <Text bold fontSize="xl">
+            {note.title}
+          </Text>
+          <Divider my="2" bg={note.color} />
+          {isExpanded == false ? (
+            <Text>{generateIntroText(note.text)}</Text>
+          ) : (
+            <>
+              <Text>{note.text}</Text>
+              {note.isEditable == false && (
+                <HStack width="100%" justifyContent="center" marginTop="10px">
+                  <FontAwesome name="lock" size={15} color="black" />
+                  <Text fontSize="xs">You can't modify this note</Text>
+                </HStack>
+              )}
+            </>
+          )}
+        </Box>
+        <HStack
+          width="100%"
+          justifyContent="space-around"
+          alignItems="center"
+          margin="10px"
+        >
+          {note.isEditable == true && (
+            <Feather
+              name="edit"
+              size={24}
+              color={note.color}
+              onPress={handleEditNote}
+            />
+          )}
+          <Ionicons
+            name={saved ? "cloud-download" : "cloud-download-outline"}
+            size={24}
+            color={note.color}
+            onPress={handleDuplicateNote}
+            disabled={saved}
+          />
+        </HStack>
       </Box>
+      <Divider my="1" />
     </Pressable>
   );
 };

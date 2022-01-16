@@ -8,7 +8,7 @@ export const UserCard = ({ username }) => {
       padding="20px"
       height="50%"
     >
-      <HStack justifyContent="center" alignItems="flex-end" width="20%">
+      <HStack justifyContent="center" alignItems="flex-end">
         <Text fontSize="2xl" bold marginRight="10px">
           Hi
         </Text>

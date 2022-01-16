@@ -15,15 +15,7 @@ import { Privates } from "./src/views/Privates";
 import { PrivateShow } from "./src/views/Privates/components/PrivateShow";
 import { Spinner } from "native-base";
 import { Center, extendTheme } from "native-base";
-import {
-  setDoc,
-  doc,
-  getDocs,
-  getDoc,
-  collection,
-  where,
-  query,
-} from "firebase/firestore";
+import { getDocs, collection, where, query } from "firebase/firestore";
 import React from "react";
 import { RecoilRoot, atom, selector } from "recoil";
 import { NoteInterface } from "./src/interfaces/NoteInterface";
