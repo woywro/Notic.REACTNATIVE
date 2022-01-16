@@ -19,6 +19,7 @@ export const newNote = (
     sharedWith: ["a", "b", "c", "d"],
     isPinned: false,
     color: color,
+    isEditable: false,
   };
   return newNote;
 };

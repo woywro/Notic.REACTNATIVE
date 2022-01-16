@@ -30,13 +30,6 @@ export const Note = ({
     return `${text.split(" ").splice(0, 15).join(" ")}...`;
   }, []);
 
-  useEffect(() => {
-    // navigation.setParams({
-    //   note: note,
-    // });
-    console.log(note);
-  }, [note]);
-
   return (
     <Pressable
       onPress={() => {

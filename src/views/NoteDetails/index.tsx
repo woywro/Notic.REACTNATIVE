@@ -26,11 +26,11 @@ export const NoteDetails = ({ route, navigation }) => {
   const [color, setColor] = useState(note.color);
   const { isOpen, onOpen, onClose } = useDisclose();
 
-  useEffect(() => {
-    navigation.setParams({
-      note: notes.filter((e) => e.id == note.id)[0],
-    });
-  }, [notes]);
+  // useEffect(() => {
+  //   navigation.setParams({
+  //     note: notes.filter((e) => e.id == note.id)[0],
+  //   });
+  // }, [notes]);
 
   useEffect(() => {
     navigation.setOptions({

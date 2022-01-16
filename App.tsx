@@ -20,6 +20,7 @@ import React from "react";
 import { RecoilRoot, atom, selector } from "recoil";
 import { NoteInterface } from "./src/interfaces/NoteInterface";
 import { userDataInterface } from "./src/interfaces/userDataInterface";
+import { DefaultTheme } from "@react-navigation/native";
 
 export const NoteItems = atom<NoteInterface[]>({
   key: "NoteItems",
