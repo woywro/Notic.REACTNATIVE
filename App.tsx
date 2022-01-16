@@ -14,7 +14,7 @@ import { Notes } from "./src/views/Notes";
 import { Privates } from "./src/views/Privates";
 import { PrivateShow } from "./src/views/Privates/components/PrivateShow";
 import { Spinner } from "native-base";
-import { Center } from "native-base";
+import { Center, extendTheme } from "native-base";
 import {
   setDoc,
   doc,
@@ -25,23 +25,15 @@ import {
   query,
 } from "firebase/firestore";
 import React from "react";
-import { Button } from "native-base";
-
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  selectorFamily,
-} from "recoil";
+import { RecoilRoot, atom, selector } from "recoil";
 import { NoteInterface } from "./src/interfaces/NoteInterface";
+import { userDataInterface } from "./src/interfaces/userDataInterface";
 
 export const NoteItems = atom<NoteInterface[]>({
   key: "NoteItems",
   default: [],
 });
-export const user = atom({
+export const user = atom<userDataInterface | {}>({
   key: "user",
   default: {},
 });
@@ -49,7 +41,7 @@ export const user = atom({
 export const NoteItemsQuery = selector({
   key: "NoteItemsQuery",
   get: async ({ get }) => {
-    const newArray = [];
+    const newArray: NoteInterface[] = [];
     const q = query(
       collection(db, "notes"),
       where("owner", "==", auth.currentUser.uid)

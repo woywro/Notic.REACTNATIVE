@@ -1,40 +1,37 @@
-import * as React from "react";
 import {
   Box,
-  Text,
   Heading,
   VStack,
   FormControl,
   Input,
-  Link,
   Button,
-  HStack,
   Center,
 } from "native-base";
-import { useRecoilValue } from "recoil";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-} from "firebase/auth";
-import { user, userDataQuery } from "../../../App";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { user } from "../../../App";
 import { useRecoilState } from "recoil";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { ErrorPopup } from "../../components/ErrorPopup";
+import { useState, useEffect } from "react";
+import { userDataInterface } from "../../interfaces/userDataInterface";
 
 export const Login = ({ navigation }) => {
-  const [userData, setUserData] = useRecoilState(user);
+  const [userData, setUserData] = useRecoilState<userDataInterface | {}>(user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  navigation.setOptions({ headerShown: false });
   const auth = getAuth();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
   const signIn = (email: string, password: string) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {})
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    signInWithEmailAndPassword(auth, email, password).catch((error) => {
+      const errorMessage = error.message;
+      setError(errorMessage);
+      setIsOpen(true);
+    });
   };
 
   const getUserData = async () => {
@@ -44,11 +41,11 @@ export const Login = ({ navigation }) => {
     return res;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const res = await getUserData();
-        setUserData(res);
+        const result = await getUserData();
+        setUserData(result);
         navigation.navigate("Home");
       } else {
         setUserData({});
@@ -58,80 +55,65 @@ export const Login = ({ navigation }) => {
   }, [auth]);
 
   return (
-    <Center flex={1} px="3">
-      <Box safeArea p="2" py="8" w="90%" maxW="290">
-        <Heading
-          size="lg"
-          fontWeight="600"
-          color="coolGray.800"
-          _dark={{
-            color: "warmGray.50",
-          }}
-        >
-          Welcome
-        </Heading>
-        <Heading
-          mt="1"
-          _dark={{
-            color: "warmGray.200",
-          }}
-          color="coolGray.600"
-          fontWeight="medium"
-          size="xs"
-        >
-          Sign in to continue!
-        </Heading>
-
-        <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Email ID</FormControl.Label>
-            <Input onChangeText={(e) => setEmail(e)} />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" onChangeText={(e) => setPassword(e)} />
-            <Link
-              _text={{
-                fontSize: "xs",
-                fontWeight: "500",
-                color: "indigo.500",
-              }}
-              alignSelf="flex-end"
-              mt="1"
-            >
-              Forget Password?
-            </Link>
-          </FormControl>
-          <Button
-            mt="2"
-            colorScheme="indigo"
-            onPress={() => signIn("test@test.pl", "rrreee")}
+    <VStack space={2.5} px="3" height="100%" width="100%" padding="10px">
+      <Center flex={1} px="3">
+        <Box safeArea p="2" py="8" w="90%" maxW="290">
+          <Heading
+            size="2xl"
+            fontWeight="600"
+            color="coolGray.800"
+            _dark={{
+              color: "warmGray.50",
+            }}
           >
-            Sign in
-          </Button>
-          <HStack mt="6" justifyContent="center">
-            <Text
-              fontSize="sm"
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
+            Login
+          </Heading>
+          <Heading
+            mt="1"
+            _dark={{
+              color: "warmGray.200",
+            }}
+            color="coolGray.600"
+            fontWeight="medium"
+            size="xs"
+          >
+            Please sign in to continue!
+          </Heading>
+
+          <VStack space={3} mt="5">
+            <FormControl>
+              <Input
+                onChangeText={(e) => setEmail(e)}
+                placeholder="email"
+                borderRadius="10px"
+                padding="10px 20px"
+              />
+            </FormControl>
+            <FormControl>
+              <Input
+                type="password"
+                onChangeText={(e) => setPassword(e)}
+                placeholder="password"
+                borderRadius="10px"
+                padding="10px 20px"
+              />
+            </FormControl>
+            <Button
+              mt="2"
+              backgroundColor="yellow.500"
+              onPress={() => signIn("test@test.pl", "rrreee")}
             >
-              I'm a new user.
-            </Text>
-            <Link
-              _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
-              }}
-              href="#"
-            >
-              Sign Up
-            </Link>
-          </HStack>
-        </VStack>
-      </Box>
-    </Center>
+              Sign in
+            </Button>
+          </VStack>
+        </Box>
+      </Center>
+      <ErrorPopup
+        title="login error"
+        text={error}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+      />
+    </VStack>
   );
 };

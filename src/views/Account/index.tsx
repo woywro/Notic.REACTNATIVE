@@ -25,7 +25,9 @@ export const Account = ({ navigation }) => {
   return (
     <VStack space={2.5} px="3" height="100%" width="100%" padding="10px">
       <UserCard username={userData.username} />
-      <Button onPress={() => auth.signOut()}>sign out</Button>
+      <Button backgroundColor="yellow.500" onPress={() => auth.signOut()}>
+        sign out
+      </Button>
       <StatusBar style="auto" />
     </VStack>
   );

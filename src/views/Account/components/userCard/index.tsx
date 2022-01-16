@@ -1,7 +1,13 @@
 import { Box, HStack, Text, VStack } from "native-base";
 export const UserCard = ({ username }) => {
   return (
-    <Box background="white" shadow={3} borderRadius="10px" padding="20px">
+    <Box
+      background="white"
+      shadow={3}
+      borderRadius="10px"
+      padding="20px"
+      height="50%"
+    >
       <HStack justifyContent="center" alignItems="flex-end" width="20%">
         <Text fontSize="2xl" bold marginRight="10px">
           Hi
