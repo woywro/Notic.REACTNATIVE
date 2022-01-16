@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "./src/views/Home";
-import { CreateNote } from "./src/views/CreateNote";
 import { NativeBaseProvider, Box } from "native-base";
 import { useState } from "react";
 import { ShareNote } from "./src/views/ShareNote";
@@ -20,7 +19,6 @@ import React from "react";
 import { RecoilRoot, atom, selector } from "recoil";
 import { NoteInterface } from "./src/interfaces/NoteInterface";
 import { userDataInterface } from "./src/interfaces/userDataInterface";
-import { DefaultTheme } from "@react-navigation/native";
 
 export const NoteItems = atom<NoteInterface[]>({
   key: "NoteItems",
@@ -67,7 +65,6 @@ export default function App() {
                 options={{ headerShown: false }}
                 component={Home}
               />
-              <Stack.Screen name="createNote" component={CreateNote} />
               <Stack.Screen name="ShareNote" component={ShareNote} />
               <Stack.Screen
                 name="PrivateShow"

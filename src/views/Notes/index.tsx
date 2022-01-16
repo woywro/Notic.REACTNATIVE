@@ -9,6 +9,8 @@ import { newNote } from "../../utils/newNote";
 import { NoteItems } from "../../../App";
 import { useRecoilState } from "recoil";
 import { NoteInterface } from "../../interfaces/NoteInterface";
+import { setDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export const Notes = ({ navigation }) => {
   const [notes, setNotes] = useRecoilState<NoteInterface[]>(NoteItems);
@@ -21,6 +23,8 @@ export const Notes = ({ navigation }) => {
       "",
       "rgb(24, 255, 109)"
     );
+    setNotes([...notes, note]);
+    setDoc(doc(db, "notes", note.id), note);
     navigation.navigate("NoteDetails", { note: note });
   };
 

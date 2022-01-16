@@ -3,7 +3,7 @@ import { Box, TextArea, Input, Divider, Text } from "native-base";
 import { updateNote } from "../../utils/updateNote";
 import { useRecoilState } from "recoil";
 import { NoteItems } from "../../../App";
-import { updateDoc } from "firebase/firestore";
+import { deleteDoc, updateDoc } from "firebase/firestore";
 import { TimeConverter } from "../../utils/TimeConverter";
 import { Actionsheet, useDisclose } from "native-base";
 import { NoteMenu } from "./components/NoteMenu/";
@@ -26,11 +26,9 @@ export const NoteDetails = ({ route, navigation }) => {
   const [color, setColor] = useState(note.color);
   const { isOpen, onOpen, onClose } = useDisclose();
 
-  // useEffect(() => {
-  //   navigation.setParams({
-  //     note: notes.filter((e) => e.id == note.id)[0],
-  //   });
-  // }, [notes]);
+  if (navigation.back && noteText == "") {
+    deleteDoc(doc(db, "notes", note.id));
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -77,7 +75,7 @@ export const NoteDetails = ({ route, navigation }) => {
       title: noteTitle,
       isPinned: pinned,
       color: color,
-      modification_timestamp: getTime(),
+      modificationTimestamp: getTime(),
     });
     navigation.navigate("Notes");
   }, [pinned, color, noteTitle, noteText, note]);
@@ -163,7 +161,7 @@ export const NoteDetails = ({ route, navigation }) => {
               />
             )}
             <Text fontSize="xs">
-              last modified: {TimeConverter(note.modification_timestamp)}
+              last modified: {TimeConverter(note.modificationTimestamp)}
             </Text>
             <Ionicons name="menu" size={24} color="black" onPress={onOpen} />
           </HStack>
