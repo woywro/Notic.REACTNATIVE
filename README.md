@@ -1,3 +1,5 @@
+## This project has bugs, that I'll try to solve in the nearest feature
+
 ![alt text](https://github.com/woywro/Notic.REACTNATIVE/blob/main/screenshots/banner.png)
 
 # Notic - share notes with friends
@@ -20,4 +22,5 @@ This project is a mini note taking social media platform, where you can share no
 - Typescript
 - Recoil 
 - Firebase (auth + firestore)
+
 
