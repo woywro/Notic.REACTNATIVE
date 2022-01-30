@@ -12,7 +12,7 @@ import { setDoc, collection, doc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { getTime } from "../../utils/getTime";
 import { Ionicons } from "@expo/vector-icons";
-import { VStack, HStack } from "native-base";
+import { HStack } from "native-base";
 import { FontAwesome } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { NoteInterface } from "../../interfaces/NoteInterface";
@@ -25,6 +25,7 @@ export const NoteDetails = ({ route, navigation }) => {
   const [pinned, setPinned] = useState(note.isPinned);
   const [color, setColor] = useState(note.color);
   const { isOpen, onOpen, onClose } = useDisclose();
+  const [reminder, setReminder] = useState(note.reminder);
 
   if (navigation.back && noteText == "") {
     deleteDoc(doc(db, "notes", note.id));
@@ -133,6 +134,8 @@ export const NoteDetails = ({ route, navigation }) => {
         noteTitle={noteTitle}
         color={color}
         setColor={setColor}
+        setReminder={setReminder}
+        remminder={reminder}
       />
       {note.owner == auth.currentUser.uid && (
         <Box

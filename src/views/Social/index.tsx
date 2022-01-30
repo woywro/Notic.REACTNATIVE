@@ -1,15 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
 import { Box, Text, VStack, Center, Spinner } from "native-base";
 import React from "react";
-import {
-  collection,
-  where,
-  query,
-  getDocs,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, where, query, getDocs } from "firebase/firestore";
 import { auth } from "../../firebase/firebase";
 import { db } from "../../firebase/firebase";
 import { useEffect, useState } from "react";

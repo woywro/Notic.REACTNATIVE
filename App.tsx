@@ -3,15 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Home } from "./src/views/Home";
 import { NativeBaseProvider, Box } from "native-base";
-import { useState } from "react";
 import { ShareNote } from "./src/views/ShareNote";
 import { NoteDetails } from "./src/views/NoteDetails";
 import { Login } from "./src/views/Login";
 import { db } from "./src/firebase/firebase";
 import { auth } from "./src/firebase/firebase";
-import { Notes } from "./src/views/Notes";
-import { Privates } from "./src/views/Privates";
-import { PrivateShow } from "./src/views/Privates/components/PrivateShow";
 import { Spinner } from "native-base";
 import { Center, extendTheme } from "native-base";
 import { getDocs, collection, where, query } from "firebase/firestore";
@@ -46,6 +42,7 @@ export const NoteItemsQuery = selector({
 });
 
 export default function App() {
+  console.disableYellowBox = true;
   const Stack = createNativeStackNavigator();
   return (
     <NativeBaseProvider>
@@ -66,11 +63,6 @@ export default function App() {
                 component={Home}
               />
               <Stack.Screen name="ShareNote" component={ShareNote} />
-              <Stack.Screen
-                name="PrivateShow"
-                options={{ headerShown: false }}
-                component={PrivateShow}
-              />
               <Stack.Screen
                 name="NoteDetails"
                 component={NoteDetails}

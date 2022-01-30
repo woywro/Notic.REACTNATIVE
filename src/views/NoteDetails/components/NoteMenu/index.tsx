@@ -1,15 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { Button } from "native-base";
-import {
-  Radio,
-  Select,
-  Box,
-  TextArea,
-  Input,
-  Divider,
-  Text,
-} from "native-base";
+import { Radio, Divider, Text } from "native-base";
 import { updateNote } from "../../../../utils/updateNote";
 import { Modal } from "native-base";
 import { useRecoilState } from "recoil";
@@ -20,7 +10,6 @@ import { Actionsheet, useDisclose } from "native-base";
 import { Reminder } from "../../../../components/Reminder";
 import { setDoc } from "firebase/firestore";
 import { TimeConverter } from "../../../../utils/TimeConverter";
-import { NoteInterface } from "../../../../interfaces/NoteInterface";
 
 interface Props {
   navigation: any;
@@ -65,7 +54,6 @@ export const NoteMenu = ({
   ];
 
   const handleDeleteReminder = () => {
-    // setReminder("");
     const newArray = notes.filter((e) => e.id !== note.id);
     newArray.push(
       updateNote(
@@ -120,31 +108,15 @@ export const NoteMenu = ({
     navigation.navigate("Notes");
   }, []);
 
-  // const getPrivates = async () => {
-  //   const docRef = doc(db, "users", "zQIWFPxcaCWHvLIT7OckgouB57W2");
-  //   const snapshot = await getDoc(docRef);
-  //   const res = snapshot.data();
-  //   return res;
-  // };
-
-  const handleSendPrivate = useCallback(async () => {
-    // const uid = "zQIWFPxcaCWHvLIT7OckgouB57W2";
-    await setDoc(doc(db, "privates", "privateid123"), {
-      from: auth.currentUser.uid,
-      to: "zQIWFPxcaCWHvLIT7OckgouB57W2",
-      note_id: note.id,
-    });
-  }, []);
-
   return (
     <>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
           <Text fontSize="xs">
-            created: {TimeConverter(note.created_timestamp)}
+            created: {TimeConverter(note.createdTimestamp)}
           </Text>
           <Text fontSize="xs">
-            last modified: {TimeConverter(note.modification_timestamp)}
+            last modified: {TimeConverter(note.modificationTimestamp)}
           </Text>
           <Radio.Group
             width="100%"
@@ -166,9 +138,6 @@ export const NoteMenu = ({
             onPress={() => navigation.navigate("ShareNote", { note: note })}
           >
             Share
-          </Actionsheet.Item>
-          <Actionsheet.Item onPress={handleSendPrivate}>
-            Send Private
           </Actionsheet.Item>
           {note.owner == auth.currentUser.uid && (
             <Actionsheet.Item onPress={handleDeleteNote}>

@@ -60,7 +60,18 @@ export const ShareNote = ({ navigation, route }) => {
   };
 
   return (
-    <Box w="100%" h="100%" padding="20px">
+    <Box w="100%" h="100%" padding="20px" alignItems="center">
+      <Checkbox.Group
+        onChange={(e) => {
+          setSendOptions(e);
+        }}
+        value={sendOptions}
+      >
+        <HStack justifyContent="center" w="100%">
+          <Text>isEditable</Text>
+          <Checkbox value={"isEditable"} marginLeft="20px" />
+        </HStack>
+      </Checkbox.Group>
       <Input
         placeholder="Search friends"
         variant="filled"
@@ -80,17 +91,6 @@ export const ShareNote = ({ navigation, route }) => {
           />
         }
       />
-      <Checkbox.Group
-        onChange={(e) => {
-          setSendOptions(e);
-        }}
-        value={sendOptions}
-      >
-        <VStack justifyContent="center" w="100%">
-          <Text>isEditable</Text>
-          <Checkbox value={"isEditable"} marginLeft="20px" />
-        </VStack>
-      </Checkbox.Group>
       {friends.map((e) => {
         return (
           <HStack justifyContent="center">
@@ -109,12 +109,11 @@ export const ShareNote = ({ navigation, route }) => {
       })}
       <Button
         position="absolute"
+        bottom="10px"
         width="100%"
-        bottom="0"
-        padding="20px"
         onPress={handleSendNote}
       >
-        send
+        {`send (${groupValues.length})`}
       </Button>
     </Box>
   );
